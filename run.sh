@@ -8,6 +8,8 @@ cd 13
 git submodule init
 git submodule update
 
+export commit_sha=$(git rev-parse HEAD)
+
 KERNEL_DEFCONFIG=vendor/sweet_user_defconfig
 export date=$(date +"%Y-%m-%d-%H%M")
 export ARCH=arm64
@@ -89,7 +91,7 @@ for ((i=1; i<=4; i++))
 do
     case $i in
         1)
-            git reset --hard HEAD
+            git reset --hard ${commit_sha}
             echo "Miui Normal"
             export zipname="ElectroKernel-Miui-Canary-sweet-${date}.zip"
             git apply scripts/ElectroKernel/commit/miui.patch
@@ -97,21 +99,21 @@ do
             start_build
             ;;
         2)
-            git reset --hard HEAD
+            git reset --hard ${commit_sha}
             echo "Miui Ksu"
             export zipname="ElectroKernel-KernelSU-Miui-Canary-sweet-${date}.zip"
             git apply scripts/ElectroKernel/commit/miui.patch
             start_build
             ;;
         3)
-            git reset --hard HEAD
+            git reset --hard ${commit_sha}
             echo "OSS Normal"
             export zipname="ElectroKernel-OSS-Canary-sweet-${date}.zip"
             git apply scripts/ElectroKernel/commit/normal.patch
             start_build
             ;;
         4)
-            git reset --hard HEAD
+            git reset --hard ${commit_sha}
             echo "OSS Ksu"
             export zipname="ElectroKernel-KernelSU-OSS-Canary-sweet-${date}.zip"
             start_build
@@ -128,7 +130,7 @@ for ((i=1; i<=4; i++))
 do
     case $i in
         1)
-            git reset --hard HEAD
+            git reset --hard ${commit_sha}
             echo "Miui Normal"
             export zipname="ElectroKernel-Miui-Stable-sweet-${date}.zip"
             git apply scripts/ElectroKernel/commit/miui.patch
@@ -136,21 +138,21 @@ do
             start_build
             ;;
         2)
-            git reset --hard HEAD
+            git reset --hard ${commit_sha}
             echo "Miui Ksu"
             export zipname="ElectroKernel-KernelSU-Miui-Stable-sweet-${date}.zip"
             git apply scripts/ElectroKernel/commit/miui.patch
 	    start_build
             ;;
         3)
-            git reset --hard HEAD
+            git reset --hard ${commit_sha}
             echo "OSS Normal"
             export zipname="ElectroKernel-OSS-Stable-sweet-${date}.zip"
             git apply scripts/ElectroKernel/commit/normal.patch
             start_build
             ;;
         4)
-            git reset --hard HEAD
+            git reset --hard ${commit_sha}
             echo "OSS Ksu"
             export zipname="ElectroKernel-KernelSU-OSS-Stable-sweet-${date}.zip"
             start_build
