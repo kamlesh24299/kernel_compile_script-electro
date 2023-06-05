@@ -22,8 +22,8 @@ jobs:
 
     - name: Setup sshpass
       run: |
-          wget -O /usr/bin/sshpass https://josh.rodd.us/software/sshpass/sshpass
-          chmod +x /usr/bin/sshpass
+          sudo wget -O /usr/bin/sshpass https://josh.rodd.us/software/sshpass/sshpass
+          sudo chmod +x /usr/bin/sshpass
 
     - name: Setup git Store Password
       env:
