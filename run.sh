@@ -174,31 +174,23 @@ done
 }
 
 canary_upload() {
-BOT_TOKEN="1440665284:AAE5Ikotv4FvvZ6L97vF6ZkVwsZnUP1suN4"
-CHAT_ID="@electrokernelcl"
-
-# Đường dẫn tới thư mục chứa các file zip
-FOLDER_PATH="$PWDIR/13/ZIPOUT"
-
-# Lấy danh sách tất cả các file zip trong thư mục
-ZIP_FILES=($(find "$FOLDER_PATH" -type f -name "*.zip"))
-
-# Lặp qua từng file zip và tải lên Telegram
-for FILE_PATH in "${ZIP_FILES[@]}"; do
-  FILE_NAME=$(basename "$FILE_PATH")
-
-  # Sử dụng lệnh curl để tải lên Telegram
-  curl -F "chat_id=$CHAT_ID" -F "document=@$FILE_PATH" https://api.telegram.org/bot$BOT_TOKEN/sendDocument
-
-  # Delay một khoảng thời gian giữa các tải lên để tránh quá tải
-  sleep 1
+TOKEN="$TG_TOKEN"
+CHAT_ID="-1001980325626"
+MESSAGE="ElectroKernel Canary ${date}"
+DIRECTORY="$PWDIR/13/ZIPOUT"
+for file in "$DIRECTORY"/*.zip
+do
+    curl -F document=@"$file" \
+         -F chat_id="$CHAT_ID" \
+         -F caption="$MESSAGE" \
+         "https://api.telegram.org/bot$TOKEN/sendDocument"
 done
 }
 
 stable_upload() {
-TOKEN="1440665284:AAE5Ikotv4FvvZ6L97vF6ZkVwsZnUP1suN4"
-CHAT_ID="@electrokernelcl"
-MESSAGE="ElectroKernel Canary"
+TOKEN="$TG_TOKEN"
+CHAT_ID="-1001980325626"
+MESSAGE="ElectroKernel Stable ${date}"
 DIRECTORY="$PWDIR/13/ZIPOUT"
 for file in "$DIRECTORY"/*.zip
 do
