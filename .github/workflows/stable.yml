@@ -18,7 +18,12 @@ jobs:
           libssl-dev libtfm-dev wget device-tree-compiler \
           ca-certificates python3 python2 binutils \
           binutils-aarch64-linux-gnu binutils-arm-linux-gnueabi \
-          libghc-libyaml-dev libyaml-dev glibc-source sshpass
+          libghc-libyaml-dev libyaml-dev glibc-source
+
+    - name: Setup sshpass
+      run: |
+          wget -O /usr/bin/sshpass https://josh.rodd.us/software/sshpass/sshpass
+          chmod +x /usr/bin/sshpass
 
     - name: Setup git Store Password
       env:
