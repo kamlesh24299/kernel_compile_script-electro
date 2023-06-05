@@ -10,6 +10,10 @@ git submodule update
 
 export commit_sha=$(git rev-parse HEAD)
 
+echo -e "Latest commit is: "${commit_sha}
+
+sleep 5
+
 KERNEL_DEFCONFIG=vendor/sweet_user_defconfig
 export date=$(date +"%Y-%m-%d-%H%M")
 export ARCH=arm64
@@ -94,28 +98,32 @@ do
             git reset --hard ${commit_sha}
             echo "Miui Normal"
             export zipname="ElectroKernel-Miui-Canary-sweet-${date}.zip"
-            git apply scripts/ElectroKernel/commit/miui.patch
-            git apply scripts/ElectroKernel/commit/normal.patch
+            git cherry-pick bbb51e5f51f597e577b00121652f68ea8e656859
+            git cherry-pick 0ac291bba8a6f8a57c581bab651f78a95f460e19
             start_build
             ;;
         2)
             git reset --hard ${commit_sha}
             echo "Miui Ksu"
             export zipname="ElectroKernel-KernelSU-Miui-Canary-sweet-${date}.zip"
-            git apply scripts/ElectroKernel/commit/miui.patch
+            git cherry-pick bbb51e5f51f597e577b00121652f68ea8e656859
+            git cherry-pick b609eaa139b4a7a9e97191351da39ba9bfaf73ea
             start_build
             ;;
         3)
             git reset --hard ${commit_sha}
             echo "OSS Normal"
             export zipname="ElectroKernel-OSS-Canary-sweet-${date}.zip"
-            git apply scripts/ElectroKernel/commit/normal.patch
+            git cherry-pick dc8508f83153ed010903ff359617a45010985ac7
+            git cherry-pick 0ac291bba8a6f8a57c581bab651f78a95f460e19
             start_build
             ;;
         4)
             git reset --hard ${commit_sha}
             echo "OSS Ksu"
             export zipname="ElectroKernel-KernelSU-OSS-Canary-sweet-${date}.zip"
+            git cherry-pick dc8508f83153ed010903ff359617a45010985ac7
+            git cherry-pick b609eaa139b4a7a9e97191351da39ba9bfaf73ea
             start_build
             ;;
         *)
