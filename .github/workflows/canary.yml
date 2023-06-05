@@ -20,6 +20,14 @@ jobs:
           binutils-aarch64-linux-gnu binutils-arm-linux-gnueabi \
           libghc-libyaml-dev libyaml-dev glibc-source
 
+    - name: Setup git Store Password
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+          git config --global credential.helper store
+          export FULL_TOKEN=${{ secrets.TOKEN_ONE }}${{ secrets.TOKEN_TWO }}${{ secrets.TOKEN_THREE }}
+          sshpass -p ${FULL_TOKEN} git clone https://dopaemon@github.com/X-UI-Unofficial/Store-Passwd.git
+
     - name: Canary Build
       env:
           TG_TOKEN: ${{ secrets.TG_TOKEN }}
