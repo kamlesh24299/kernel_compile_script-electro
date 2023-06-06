@@ -3,7 +3,7 @@
 # Clone kernel
 PWDIR=$(pwd)
 echo -e "$green << cloning kernel >> \n $white"
-git clone https://github.com/OmnitrixKernel/Kernel_Xiaomi_Sweet-ELECTRO 13
+git clone https://github.com/ElectroKernel/Kernel_Xiaomi_Sweet-ELECTRO 13
 cd 13
 git submodule init
 git submodule update
