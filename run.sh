@@ -1,12 +1,17 @@
 #!/bin/bash
 #set -e
 # Clone kernel
-PWDIR=$(pwd)
+export PWDIR=$(pwd)
 echo -e "$green << cloning kernel >> \n $white"
 git clone https://github.com/ElectroKernel/Kernel_Xiaomi_Sweet-ELECTRO 13
 cd 13
 git submodule init
 git submodule update
+
+rm -rf ZIPOUT
+
+git config --local user.name "dopaemon"
+git config --local user.email "polarisdp@gmail.com"
 
 export commit_sha=$(git rev-parse HEAD)
 
@@ -22,17 +27,17 @@ mkdir -p ZIPOUT
 
 # Tool Chain
 echo -e "$green << cloning gcc from arter >> \n $white"
-git clone --depth=1 https://github.com/mvaisakh/gcc-arm64 "$HOME"/gcc64
-git clone --depth=1 https://github.com/mvaisakh/gcc-arm "$HOME"/gcc32
-export PATH="$HOME/gcc64/bin:$HOME/gcc32/bin:$PATH"
-export STRIP="$HOME/gcc64/aarch64-elf/bin/strip"
-export KBUILD_COMPILER_STRING=$("$HOME"/gcc64/bin/aarch64-elf-gcc --version | head -n 1)
+git clone --depth=1 https://github.com/mvaisakh/gcc-arm64 "$PWDIR"/../gcc64
+git clone --depth=1 https://github.com/mvaisakh/gcc-arm "$PWDIR"/../gcc32
+export PATH="$PWDIR/../gcc64/bin:$PWDIR/../gcc32/bin:$PATH"
+export STRIP="$PWDIR/../gcc64/aarch64-elf/bin/strip"
+export KBUILD_COMPILER_STRING=$("$PWDIR"/../gcc64/bin/aarch64-elf-gcc --version | head -n 1)
 
 # Clang
 echo -e "$green << cloning clang >> \n $white"
-git clone -b 15 --depth=1 https://gitlab.com/PixelOS-Devices/playgroundtc.git "$HOME"/clang
-export PATH="$HOME/clang/bin:$PATH"
-export KBUILD_COMPILER_STRING=$("$HOME"/clang/bin/clang --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')
+git clone -b 15 --depth=1 https://gitlab.com/PixelOS-Devices/playgroundtc.git "$PWDIR"/../clang
+export PATH="$PWDIR/../clang/bin:$PATH"
+export KBUILD_COMPILER_STRING=$("$PWDIR"/../clang/bin/clang --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')
 
 
 # Speed up build process
@@ -178,13 +183,21 @@ TOKEN="$TG_TOKEN"
 CHAT_ID="-1001980325626"
 MESSAGE="ElectroKernel Canary ${date}"
 DIRECTORY="$PWDIR/13/ZIPOUT"
-for file in "$DIRECTORY"/*.zip
-do
-    curl -F document=@"$file" \
-         -F chat_id="$CHAT_ID" \
-         -F caption="$MESSAGE" \
-         "https://api.telegram.org/bot$TOKEN/sendDocument"
+# Đường dẫn đến thư mục chứa các file zip
+FOLDER_PATH="$PWDIR/13/ZIPOUT"
+
+# Tạo một mảng chứa các file zip
+declare -a FILE_ARRAY
+
+# Lặp qua tất cả các file zip trong thư mục và thêm vào mảng
+for FILE_PATH in "$FOLDER_PATH"/*.zip; do
+  FILE_ARRAY+=("-F" "document=@\"$FILE_PATH\"")
 done
+
+# Gửi tin nhắn với cả 4 file đính kèm
+curl -s -X POST "https://api.telegram.org/bot$TOKEN/sendDocument" \
+  -F chat_id="$CHAT_ID" \
+  "${FILE_ARRAY[@]}"
 }
 
 stable_upload() {
