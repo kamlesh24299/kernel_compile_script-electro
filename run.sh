@@ -12,6 +12,8 @@ git submodule update --recursive --remote
 
 rm -rf ZIPOUT
 
+rm -rf out
+
 git config --local user.name "dopaemon"
 git config --local user.email "polarisdp@gmail.com"
 
