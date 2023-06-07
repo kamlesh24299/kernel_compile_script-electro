@@ -8,10 +8,16 @@ cd 13
 git submodule init
 git submodule update
 
+git submodule update --recursive --remote
+
 rm -rf ZIPOUT
 
 git config --local user.name "dopaemon"
 git config --local user.email "polarisdp@gmail.com"
+
+git add -vAf
+
+git commit -sm "KernelSU: Latest commit"
 
 export commit_sha=$(git rev-parse HEAD)
 
