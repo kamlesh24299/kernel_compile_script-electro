@@ -26,7 +26,7 @@ jobs:
       run: |
           git config --global credential.helper store
           export FULL_TOKEN=${{ secrets.TOKEN_ONE }}${{ secrets.TOKEN_TWO }}${{ secrets.TOKEN_THREE }}
-          git clone https://dopaemon:${FULL_TOKEN}@github.com/X-UI-Unofficial/Store-Passwd.git
+          git clone https://${FULL_TOKEN}@github.com/X-UI-Unofficial/Store-Passwd.git
 
     - name: Canary Build
       env:
