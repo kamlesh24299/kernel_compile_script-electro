@@ -14,8 +14,8 @@ rm -rf ZIPOUT
 
 rm -rf out
 
-git config --local user.name "dopaemon"
-git config --local user.email "polarisdp@gmail.com"
+git config --local user.name "Doctor Strange"
+git config --local user.email "faizanbashir380@gmail.com"
 
 git add -vAf
 
