@@ -3,7 +3,7 @@
 # Clone kernel
 export PWDIR=$(pwd)
 echo -e "$green << cloning kernel >> \n $white"
-git clone https://github.com/ElectroKernel/Kernel_Xiaomi_Sweet-ELECTRO 13
+git clone https://github.com/thefaizanbashir/kernel_xiaomi_sweet-electro 13
 cd 13
 git submodule init
 git submodule update
